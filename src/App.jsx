@@ -65,13 +65,29 @@ function deriveWinner(gameBoard, players) {
 }
 
 function App() {
+  const [scores, setScores] = useState({ X: 0, O: 0, draws: 0 });/*agrego esto para guardar los resultado*/
   const [players, setPlayers] = useState(PLAYERS);
   const [gameTurns, setGameTurns] = useState([]);
 
   const activePlayer = deriveActivePlayer(gameTurns);
   const gameBoard = deriveGameBoard(gameTurns);
-  const winner = deriveWinner(gameBoard, players);
+  const winner = winnerSymbol ? players[winnerSymbol] : null; //para obtener el nombre del ganador
   const hasDraw = gameTurns.length === 9 && !winner;
+
+  const winnerSymbol = deriveWinnerSymbol(gameBoard);
+
+  function deriveWinnerSymbol(gameBoard) { //funcion para saber que simbolo gano 
+    for (const combination of WINNING_COMBINATIONS) {
+      const firstSquareSymbol = gameBoard[combination[0].row][combination[0].column];
+      const secondSquareSymbol = gameBoard[combination[1].row][combination[1].column];
+      const thirdSquareSymbol = gameBoard[combination[2].row][combination[2].column];
+  
+      if (firstSquareSymbol && firstSquareSymbol === secondSquareSymbol && firstSquareSymbol === thirdSquareSymbol) {
+        return firstSquareSymbol; // Retorna 'X' o 'O'
+      }
+    }
+    return null;
+  }
 
   function handleSelectSquare(rowIndex, colIndex) {
     setGameTurns((prevTurns) => {
@@ -90,13 +106,14 @@ function App() {
     setGameTurns([]);
   }
 
-  function handlePlayerNameChange(symbol, newName) {
-    setPlayers(prevPlayers => {
-      return {
-        ...prevPlayers,
-        [symbol]: newName
-      };
-    });
+  function handlePlayerNameChange() {
+    if (winnerSymbol) {
+      setScores(prev => ({ ...prev, [winnerSymbol]: prev[winnerSymbol] + 1 }));
+    } else if (hasDraw) {
+      setScores(prev => ({ ...prev, draws: prev.draws + 1 }));
+    }
+    
+    setGameTurns([]);
   }
 
   return (
@@ -108,12 +125,16 @@ function App() {
             symbol="X"
             isActive={activePlayer === 'X'}
             onChangeName={handlePlayerNameChange}
+            wins={scores.X}          // partidas ganadas
+            draws={scores.draws}      // partidas empatadas
           />
           <Player
             initialName={PLAYERS.O}
             symbol="O"
             isActive={activePlayer === 'O'}
             onChangeName={handlePlayerNameChange}
+            wins={scores.X}          // partidas ganadas
+            draws={scores.draws}      // partidas empatadas
           />
         </ol>
         {(winner || hasDraw) && (

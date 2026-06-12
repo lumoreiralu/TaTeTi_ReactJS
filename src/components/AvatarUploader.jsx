@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const AvatarUploader = ({ initialSrc, size = 100, id="avatar-upload" }) => {
+const AvatarUploader = ({ initialSrc, size = 100, id="avatar-upload", tooltipText = "" }) => {
   const [avatar, setAvatar] = useState(initialSrc);
 
   const handleFileChange = (event) => {
@@ -20,6 +20,7 @@ const AvatarUploader = ({ initialSrc, size = 100, id="avatar-upload" }) => {
         <img
           src={avatar}
           alt="Avatar"
+          title={tooltipText} //aca se muestra el tooltip
           width={size}
           height={size}
           style={{

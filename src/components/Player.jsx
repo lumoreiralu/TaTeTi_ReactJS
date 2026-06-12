@@ -6,9 +6,12 @@ export default function Player({
   symbol,
   isActive,
   onChangeName,
+  wins, //recibe las partidas ganadas
+  draws, //recibe las partidas empatadas
 }) {
   const [playerName, setPlayerName] = useState(initialName);
   const [isEditing, setIsEditing] = useState(false);
+  const statsText = `Partidos ganados: ${wins} | Empatados: ${draws}`;
 
   function handleEditClick() {
     setIsEditing((editing) => !editing);
@@ -35,7 +38,9 @@ export default function Player({
   return (
     <li className={isActive ? 'active' : undefined}>
       <span className="player">
-        <AvatarUploader id={`avatar-${symbol}`} initialSrc="https://cdn-icons-png.flaticon.com/512/847/847969.png" size={40} />
+        <AvatarUploader id={`avatar-${symbol}`} initialSrc="https://cdn-icons-png.flaticon.com/512/847/847969.png" size={40}
+        tooltipText={statsText} />
+        
         {editablePlayerName}
         <span className="player-symbol">{symbol}</span>
       </span>
