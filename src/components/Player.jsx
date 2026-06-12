@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import AvatarUploader from './AvatarUploader';
 
 export default function Player({
   initialName,
@@ -34,6 +35,7 @@ export default function Player({
   return (
     <li className={isActive ? 'active' : undefined}>
       <span className="player">
+        <AvatarUploader id={`avatar-${symbol}`} initialSrc="https://cdn-icons-png.flaticon.com/512/847/847969.png" size={40} />
         {editablePlayerName}
         <span className="player-symbol">{symbol}</span>
       </span>

@@ -6,6 +6,7 @@ import Log from './components/Log.jsx';
 import GameOver from './components/GameOver.jsx';
 import { WINNING_COMBINATIONS } from './winning-combinations.js';
 
+
 const PLAYERS = {
   X: 'Player 1',
   O: 'Player 2'
