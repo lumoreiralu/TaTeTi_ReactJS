@@ -11,7 +11,7 @@ export default function Player({
 }) {
   const [playerName, setPlayerName] = useState(initialName);
   const [isEditing, setIsEditing] = useState(false);
-  const statsText = `Partidos ganados: ${wins} | Empatados: ${draws}`;
+  const statsText = `Partidos ganados: ${wins ?? 0} | Empatados: ${draws ?? 0}`;
 
   function handleEditClick() {
     setIsEditing((editing) => !editing);

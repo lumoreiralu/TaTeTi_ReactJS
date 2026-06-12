@@ -16,7 +16,7 @@ const AvatarUploader = ({ initialSrc, size = 100, id="avatar-upload", tooltipTex
 
   return (
     <div style={{ textAlign: "center" }}>
-      <label htmlFor={id}> 
+      <label htmlFor={id} title={tooltipText}> 
         <img
           src={avatar}
           alt="Avatar"
@@ -27,7 +27,8 @@ const AvatarUploader = ({ initialSrc, size = 100, id="avatar-upload", tooltipTex
             borderRadius: "50%",
             objectFit: "cover",
             cursor: "pointer",
-            border: "2px solid #ccc"
+            border: "2px solid #ccc",
+            pointerEvents: "auto"
           }}
         />
       </label>
